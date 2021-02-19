@@ -54,17 +54,21 @@ function promptManager() {
         message: 'Please enter the managers office number',
     },
 ])
+}
 
-// .then((responses) => {
-//     const readmeContent = generateREADME(responses);
-
-//     fs.writeFile('README.md', readmeContent, (err) =>
-//         err ? console.log(err) : console.log('Successfully created README.md!')
-//     );
-// });
-
+function promptRole() {
+    return inquirer
+        .prompt([
+    {
+        type: 'list',
+        name: 'role',
+        message: "What type of team member would you like to add?",
+        choices: ['Engineer', 'Intern', 'No more to add']
+    },
+])
 }
 promptManager()
+promptRole()
 
 
 
