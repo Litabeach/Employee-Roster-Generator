@@ -13,7 +13,16 @@ const render = require("./lib/htmlRenderer");
 init();
 
 function init() {
-    promptRole()
+
+    promptTeam()
+
+    // fs.writeFile(outputPath, team, function(err) {
+    //     if (err) {
+    //         console.log(err);
+    //     }
+    //     console.log("team.html has been created")
+    // });
+
 }
 
 function promptManager() {
@@ -127,7 +136,7 @@ async function promptTeam() {
             ])
 
             .then(function ({ name, id, email, gitHub }) {
-                teamMembers.push(new IEngineer(name, id, email, gitHub));
+                teamMembers.push(new Engineer(name, id, email, gitHub));
                 return promptTeam();
             })
     }
@@ -182,6 +191,10 @@ async function promptTeam() {
                 teamMembers.push(new Intern(name, id, email, school));
                 return promptTeam();
             })
+        }
+
+        else {
+            return teamMembers;
         }
     }
 
