@@ -68,7 +68,108 @@ function promptRole() {
 ])
 }
 promptManager()
-promptRole()
+// promptRole()
+promptTeam()
+
+function promptTeam() {
+    promptRole()
+
+    if (role === "Engineer"){
+    return inquirer
+        .prompt([
+
+    {
+        type: 'input',
+        name: 'name',
+        message: "Enter the engineers's name",
+        validate: answer => {
+            if (answer !== "") {
+                return true;
+            }
+            else 
+                return "Please enter at least one character"
+        }
+    },
+
+    {
+        type: 'number',
+        name: 'id',
+        message: "Please enter the engineer's ID number",
+    },
+
+    {
+        type: 'input',
+        name: 'email',
+        message: 'Please enter the engineers email address',
+        validate: function(email) {
+           //line 42 is all the character that can be included in an email address
+            if (/^\w+([\.\+-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+              return (true)
+            }
+              console.log(" You have entered an invalid email address!")
+              return (false)
+            
+          }
+        
+    },
+    
+    {
+        type: 'input',
+        name: 'gitHub',
+        message: "Please enter the engineer's gitHub",
+    },
+
+]) 
+}
+
+else if (role === "Intern"){
+        return inquirer
+            .prompt([
+    
+        {
+            type: 'input',
+            name: 'name',
+            message: "Enter the intern's name",
+            validate: answer => {
+                if (answer !== "") {
+                    return true;
+                }
+                else 
+                    return "Please enter at least one character"
+            }
+        },
+    
+        {
+            type: 'number',
+            name: 'id',
+            message: "Please enter the intern's ID number",
+        },
+    
+        {
+            type: 'input',
+            name: 'email',
+            message: "Please enter the intern's email address",
+            validate: function(email) {
+               //line 42 is all the character that can be included in an email address
+                if (/^\w+([\.\+-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+                  return (true)
+                }
+                  console.log(" You have entered an invalid email address!")
+                  return (false)
+                
+              }
+        },
+    
+        {
+            type: 'input',
+            name: 'school',
+            message: "Please enter the intern's school",
+        },
+    ])
+    }
+}
+
+
 
 
 
