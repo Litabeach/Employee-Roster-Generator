@@ -10,6 +10,65 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+function promptManager() {
+    return inquirer
+        .prompt([
+
+    {
+        type: 'input',
+        name: 'name',
+        message: "Enter the manager's name",
+        validate: answer => {
+            if (answer !== "") {
+                return true;
+            }
+            else 
+                return "Please enter at least one character"
+        }
+    },
+
+    {
+        type: 'number',
+        name: 'id',
+        message: 'Please enter the managers ID number',
+    },
+
+    {
+        type: 'input',
+        name: 'email',
+        message: 'Please enter the managers email address',
+        validate: function(email) {
+           //line 42 is all the character that can be included in an email address
+            if (/^\w+([\.\+-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+              return (true)
+            }
+              console.log(" You have entered an invalid email address!")
+              return (false)
+            
+          }
+    },
+
+    {
+        type: 'number',
+        name: 'officeNumber',
+        message: 'Please enter the managers office number',
+    },
+])
+
+// .then((responses) => {
+//     const readmeContent = generateREADME(responses);
+
+//     fs.writeFile('README.md', readmeContent, (err) =>
+//         err ? console.log(err) : console.log('Successfully created README.md!')
+//     );
+// });
+
+}
+promptManager()
+
+
+
+
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
