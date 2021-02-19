@@ -12,19 +12,46 @@ const render = require("./lib/htmlRenderer");
 
 init();
 
-function init() {
+async function init() {
+    try {
+        // Create an empty array to push all employees into
+        const employees = [];
 
-    promptTeam()
+        // Prompt for manager
+        const { name, id, email, officeNumber } = await promptManager();
+        // Push manager into array
+        employees.push(new Manager(name, id, email, officeNumber));
 
-    // fs.writeFile(outputPath, team, function(err) {
-    //     if (err) {
-    //         console.log(err);
-    //     }
-    //     console.log("team.html has been created")
-    // });
+        // Prompt for team members
+        const response = await promptTeam();
+        //push all the rest of the team members into array
+        employees.push(...response);
+
+        // After the user has input all employees desired, call the `render` function (required
+        // above) and pass in an array containing all employee objects; the `render` function will
+        // generate and return a block of HTML including templated divs for each employee!
+        const team = await render(employees);
+        console.log(team);
+
+        // After you have your html, you're now ready to create an HTML file using the HTML
+        // returned from the `render` function. Now write it to a file named `team.html` in the
+        // `output` folder. You can use the variable `outputPath` above target this location.
+        // Hint: you may need to check if the `output` folder exists and create it if it
+        // does not.
+        fs.writeFile(outputPath, team, function(err) {
+            if (err) {
+                console.log(err);
+            }
+            console.log("team.html has been created")
+        });
+
+    } catch (err) {
+        console.log(err);
+    }
 
 }
 
+//manager questions
 function promptManager() {
     return inquirer
         .prompt([
@@ -53,7 +80,7 @@ function promptManager() {
                 name: 'email',
                 message: 'Please enter the managers email address',
                 validate: function (email) {
-                    //line 42 is all the character that can be included in an email address
+                    // all the character that can be included in an email address
                     if (/^\w+([\.\+-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
                         return (true)
                     }
@@ -71,8 +98,9 @@ function promptManager() {
         ])
 }
 
-async function promptRole() {
-    await promptManager()
+//the questions about roles are asked after the manager questions with async/await
+function promptRole() {
+    // await promptManager()
     return inquirer
         .prompt([
             {
@@ -84,9 +112,11 @@ async function promptRole() {
         ])
 }
 
+
+//questions about for team members, if/else statement used to ask different questions based on role
 const teamMembers = [];
 async function promptTeam() {
-    const role = await promptRole()
+    const {role} = await promptRole()
 
     if (role === "Engineer") {
         return inquirer
@@ -136,6 +166,7 @@ async function promptTeam() {
             ])
 
             .then(function ({ name, id, email, gitHub }) {
+                //push new engineer into the array
                 teamMembers.push(new Engineer(name, id, email, gitHub));
                 return promptTeam();
             })
@@ -188,6 +219,7 @@ async function promptTeam() {
 
 
             .then(function ({ name, id, email, school }) {
+                //push new intern into the array
                 teamMembers.push(new Intern(name, id, email, school));
                 return promptTeam();
             })
