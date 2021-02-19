@@ -13,9 +13,7 @@ const render = require("./lib/htmlRenderer");
 init();
 
 function init() {
-    promptManager()
-    // promptRole()
-    // promptTeam()
+    promptRole()
 }
 
 function promptManager() {
