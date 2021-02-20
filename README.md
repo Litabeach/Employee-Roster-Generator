@@ -31,8 +31,8 @@ Once the relevant packages have been installed, use the command "node app.js" fr
 
 Sse the command "node app.js" from the command line to run the application. Answer questions about the manager of the project. Add as many engineers and interns as needed. The application will render an html page based on your input once you have completed the series of questions.
 
-![screenshot of rendered output](assets/output.png)
-![screenshot of tests from the command line](assets/runit.png)
+![screenshot of rendered output](Assets/output.png)
+![screenshot of tests from the command line](Assets/runit.png)
 
 ## Credits
 
@@ -60,4 +60,4 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 Run "npm test" from the Develop folder to view testing.
 
-![screenshot of tests from the command line](assets/test.png)
+![screenshot of tests from the command line](Assets/test.png)
