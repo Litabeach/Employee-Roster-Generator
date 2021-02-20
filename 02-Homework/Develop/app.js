@@ -133,14 +133,15 @@ function promptTeam(role) {
 
                 {
                     type: 'input',
-                    name: 'gitHub',
-                    message: "Please enter the engineer's gitHub",
+                    name: 'github',
+                    message: "Please enter the engineer's github",
                 },
             ])
 
-            .then(function ({ name, id, email, gitHub }) {
+            .then(function ({ name, id, email, github }) {
                 //push new engineer into the array, passing through name, id, email and github
-                employees.push(new Engineer(name, id, email, gitHub));
+                employees.push(new Engineer(name, id, email, github));
+
                 //ask if they want to add another team member
                 return promptRole();
             })
@@ -149,6 +150,7 @@ function promptTeam(role) {
     else if (role === "Intern") {
         return inquirer
             .prompt([
+
                 {
                     type: 'input',
                     name: 'name',
@@ -190,20 +192,17 @@ function promptTeam(role) {
                 },
             ])
 
+
             .then(function ({ name, id, email, school }) {
-                //push new intern into the array
+                //push new intern into the array, passing the correct variables through
                 employees.push(new Intern(name, id, email, school));
-                //when finished pushing the new intern into the array, ask if they want to add another team member
+                //when finished pushing the new intern into the array, run promptRole to add another team member
                 return promptRole();
             })
     }
 }
 
-//run the function! try/catch are error handlers
-try {
-    promptManager();
-} catch (err) {
-    console.log(err);
-}
 
+//run the function! 
+promptManager();
 
