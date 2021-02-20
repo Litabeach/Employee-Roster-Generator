@@ -1,10 +1,18 @@
 body{
-    color:rgb(21, 27, 110);
-    background-color: lightblue
+    color: rgb(44, 77, 88);
+    background-color: rgb(44, 77, 88);
 }
 
 .employee-card {
     margin:40px;
     padding: 10px;
     background-color: rgb(243, 237, 237);
+}
+
+.card-header{
+    background-color:  lightblue;
+}
+
+.list-group-item{
+    font-weight: bold;
 }

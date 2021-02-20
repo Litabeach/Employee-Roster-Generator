@@ -76,7 +76,6 @@ function promptRole() {
             },
         ]).then(function (response) {
             if (response.role == 'No more to add') {
-                console.log(employees)
                 fs.writeFile(outputPath, render(employees), function (err) {
                     if (err) {
                         console.log(err);
@@ -89,7 +88,6 @@ function promptRole() {
             }
         })
 }
-
 
 //async function: promptTeam has to wait (await) for the promptRole function to run before it runs
 function promptTeam(role) {
