@@ -1,0 +1,10 @@
+body{
+    color:rgb(21, 27, 110);
+    background-color: lightblue
+}
+
+.employee-card {
+    margin:40px;
+    padding: 10px;
+    background-color: rgb(243, 237, 237);
+}
