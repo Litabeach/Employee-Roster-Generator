@@ -1,4 +1,4 @@
-# Team Generator
+# Employee Roster Generator
 
 ## Description 
 Generate an employee roster for any team that includes a manager, engineers and interns. Inputs are tailored to job position.
