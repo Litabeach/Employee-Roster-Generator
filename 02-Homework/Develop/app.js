@@ -9,47 +9,15 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
+const employees = [];
 
-init();
 
-async function init() {
-    try {
-        // Create an empty array to push all employees into
-        const employees = [];
+//error checking method, apply to each function?
+// try {}
 
-        // Prompt for manager
-        const { name, id, email, officeNumber } = await promptManager();
-        // Push manager into array
-        employees.push(new Manager(name, id, email, officeNumber));
-
-        // Prompt for team members
-        const response = await promptTeam();
-        //push all the rest of the team members into array
-        employees.push(...response);
-
-        // After the user has input all employees desired, call the `render` function (required
-        // above) and pass in an array containing all employee objects; the `render` function will
-        // generate and return a block of HTML including templated divs for each employee!
-        const team = await render(employees);
-        console.log(team);
-
-        // After you have your html, you're now ready to create an HTML file using the HTML
-        // returned from the `render` function. Now write it to a file named `team.html` in the
-        // `output` folder. You can use the variable `outputPath` above target this location.
-        // Hint: you may need to check if the `output` folder exists and create it if it
-        // does not.
-        fs.writeFile(outputPath, team, function(err) {
-            if (err) {
-                console.log(err);
-            }
-            console.log("team.html has been created")
-        });
-
-    } catch (err) {
-        console.log(err);
-    }
-
-}
+// catch (err) {
+//     console.log(err);
+// }
 
 //manager questions
 function promptManager() {
@@ -95,12 +63,18 @@ function promptManager() {
                 name: 'officeNumber',
                 message: 'Please enter the managers office number',
             },
-        ])
+        ]).then(function ({ name, id, email, officeNumber }) {
+            //push new engineer into the array, passing through name, id, email and github
+            const manager = new Manager(name, id, email, officeNumber)
+            employees.push(manager)
+            console.log(employees)
+            return promptRole();
+        })
+
 }
 
-//the questions about roles are asked after the manager questions with async/await
+//the questions about roles are asked after the manager questions with async/await in the init function
 function promptRole() {
-    // await promptManager()
     return inquirer
         .prompt([
             {
@@ -109,14 +83,25 @@ function promptRole() {
                 message: "What type of team member would you like to add?",
                 choices: ['Engineer', 'Intern', 'No more to add']
             },
-        ])
+        ]).then(function (response) {
+            if (response.role == 'No more to add') {
+                console.log(employees)
+                fs.writeFile(outputPath, render(employees), function (err) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    console.log("team.html has been created")
+                });
+            }
+            else {
+                promptTeam(response.role)
+            }
+        })
 }
 
 
-//questions about for team members, if/else statement used to ask different questions based on role
-const teamMembers = [];
-async function promptTeam() {
-    const {role} = await promptRole()
+//async function: promptTeam has to wait (await) for the promptRole function to run before it runs
+function promptTeam(role) {
 
     if (role === "Engineer") {
         return inquirer
@@ -166,9 +151,11 @@ async function promptTeam() {
             ])
 
             .then(function ({ name, id, email, gitHub }) {
-                //push new engineer into the array
-                teamMembers.push(new Engineer(name, id, email, gitHub));
-                return promptTeam();
+                //push new engineer into the array, passing through name, id, email and github
+                employees.push(new Engineer(name, id, email, gitHub));
+                console.log(employees)
+                //ask if they want to add another team member
+                return promptRole();
             })
     }
 
@@ -220,19 +207,26 @@ async function promptTeam() {
 
             .then(function ({ name, id, email, school }) {
                 //push new intern into the array
-                teamMembers.push(new Intern(name, id, email, school));
-                return promptTeam();
+                employees.push(new Intern(name, id, email, school));
+                console.log(employees)
+                //when finished pushing the new intern into the array, ask if they want to add another team member
+                return promptRole();
             })
-        }
-
-        else {
-            return teamMembers;
-        }
     }
 
+    // else {
+    //     //if they dont want to add another engineer or intern, return the array of teamMembers previously created
+    //     return employees;
+    // }
+}
 
 
 
+try {
+    promptManager();
+} catch (err) {
+    console.log(err);
+}
 
 
 
