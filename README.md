@@ -3,8 +3,8 @@
 ## Description 
 Generate an employee roster for any team that includes a manager, engineers and interns. Inputs are tailored to job position.
 
-Link to deployed application with sample input:
-https://litabeach.github.io/Team-Generator/Develop/output/team.html
+Link to walkthrough video:
+https://youtu.be/RPyup1ef7xA
 
 
 ## Table of Contents 
