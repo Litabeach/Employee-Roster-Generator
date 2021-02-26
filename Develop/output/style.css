@@ -4,6 +4,7 @@ body{
 }
 
 .employee-card {
+    display: flex;
     margin:40px;
     padding: 10px;
     background-color: rgb(243, 237, 237);
